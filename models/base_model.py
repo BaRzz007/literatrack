@@ -2,12 +2,11 @@
 """base_model module"""
 import uuid
 from datetime import datetime
-from models import storage
 
 timefmt = "%Y-%m-%dT%H:%M:%S.%f"
 
 
-class BaseModel():
+class BaseModel:
     """base_model class"""
 
     def __init__(self, *args, **kwargs):
@@ -39,6 +38,7 @@ class BaseModel():
     
     def save(self):
         """ """
+        from models import storage
         self.updated_at = datetime.utcnow()
         storage.new(self)
         storage.save()
@@ -57,5 +57,6 @@ class BaseModel():
 
     def delete(self):
         """ """
+        from models import storage
         storage.delete(self)
         storage.save()
