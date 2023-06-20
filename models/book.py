@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Book model module"""
+"""book module"""
 from models.base_model import BaseModel
 
 

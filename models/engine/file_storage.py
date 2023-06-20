@@ -5,13 +5,17 @@ from models.base_model import BaseModel
 from models.user import User
 from models.author import Author
 from models.book import Book, BookAuthor
+from models.review import Review
+from models.comment import Comment
 
 
 classes = {"BaseModel": BaseModel,
            "User": User,
            "Book": Book,
            "Author": Author,
-           "BookAuthor": BookAuthor}
+           "BookAuthor": BookAuthor,
+           "Review": Review,
+           "Comment": Comment}
 
 
 class FileStorage:

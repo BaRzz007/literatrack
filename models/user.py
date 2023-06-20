@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""User module"""
+"""user module"""
 from models.base_model import BaseModel
 
 
@@ -7,3 +7,6 @@ class User(BaseModel):
     """User class"""
     email = ""
     password = ""
+    followers = ""
+    following = ""
+    

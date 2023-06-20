@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Author module"""
+"""author module"""
 from models.base_model import BaseModel
 
 
