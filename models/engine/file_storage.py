@@ -2,8 +2,16 @@
 """ """
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models.author import Author
+from models.book import Book, BookAuthor
 
-classes = {"BaseModel": BaseModel}
+
+classes = {"BaseModel": BaseModel,
+           "User": User,
+           "Book": Book,
+           "Author": Author,
+           "BookAuthor": BookAuthor}
 
 
 class FileStorage:
@@ -25,7 +33,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns an object instance or None if it doesn't exist"""
-        return self.all().get(f"{cls}.{id}")
+        return self.all().get(f"{cls.__name__}.{id}")
 
     def save(self):
         """Save objects to file"""
