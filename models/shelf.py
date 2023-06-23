@@ -24,7 +24,7 @@ class Shelf(BaseModel):
         from models.book import Book
         from models import storage
         if isinstance(book, Book) and \
-            book in storage.all(Book) and \
+            book in storage.all(Book).values() and \
                 not storage.all(ShelfBook).get(f"ShelfBook.{self.id}.{book.id}"):
             temp = ShelfBook(**{"book_id": book.id, "shelf_id": self.id})
             temp.save()

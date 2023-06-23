@@ -7,6 +7,8 @@ from models.author import Author
 from models.book import Book, BookAuthor
 from models.review import Review
 from models.comment import Comment
+from models.shelf import ShelfBook
+from models.shelf import Shelf
 
 
 classes = {"BaseModel": BaseModel,
@@ -15,7 +17,9 @@ classes = {"BaseModel": BaseModel,
            "Author": Author,
            "BookAuthor": BookAuthor,
            "Review": Review,
-           "Comment": Comment}
+           "Comment": Comment,
+           "ShelfBook": ShelfBook,
+           "Shelf": Shelf}
 
 
 class FileStorage:
