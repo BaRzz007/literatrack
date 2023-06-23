@@ -64,3 +64,7 @@ class FileStorage:
             return
         self.__objects = {key: classes[val["__class__"]](**val)
                           for key, val in temp.items()}
+
+    def close(self):
+        """reload storage object to refresh request context"""
+        self.reload()

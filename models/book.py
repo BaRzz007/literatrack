@@ -29,7 +29,7 @@ class Book(BaseModel):
         from models import storage
         if isinstance(author, Author) and \
             author in storage.all(Author).values() and \
-                not storage.all(BookAuthor).get(f"{BookAuthor.__name__}.{self.id}.{author.id}"):
+                not storage.all(BookAuthor).get(f"BookAuthor.{self.id}.{author.id}"):
             temp = BookAuthor(**{"book_id": self.id, "author_id": author.id})
             temp.save()
             self.author_ids.append(author.id)

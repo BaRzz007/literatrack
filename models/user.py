@@ -7,6 +7,5 @@ class User(BaseModel):
     """User class"""
     email = ""
     password = ""
-    followers = ""
-    following = ""
-    
+    followers = []
+    following = []
