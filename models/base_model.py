@@ -2,6 +2,7 @@
 """base_model module"""
 import uuid
 from datetime import datetime
+from datetime import timedelta
 
 timefmt = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -25,16 +26,20 @@ class BaseModel:
             else:
                 self.updated_at = datetime.utcnow()
 
+            if kwargs.get("duration", None):
+                self.duration = kwargs["duration"]
+
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
         else:
+            time = datetime.utcnow()
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = datetime.utcnow()
+            self.created_at = time
+            self.updated_at = time
 
     def __str__(self):
         """String representaton of instance"""
-        return f"[{self.__class__.__name__}] {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
     
     def save(self):
         """ """
@@ -50,6 +55,9 @@ class BaseModel:
             temp_dict["created_at"] = temp_dict["created_at"].strftime(timefmt)
         if "updated_at" in temp_dict.keys():
             temp_dict["updated_at"] = temp_dict["updated_at"].strftime(timefmt)
+        if f"_{self.__class__.__name__}__duration" in temp_dict.keys():
+            temp_dict["duration"] = self.duration.days
+        del temp_dict[f"_{self.__class__.__name__}__duration"]
         temp_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in temp_dict:
             del temp_dict["_sa_instance_state"]

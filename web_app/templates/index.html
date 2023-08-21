@@ -3,5 +3,28 @@
     <title>Literatrack</title>
 {% endblock %}
 {% block body %}
-<p>Welcome {{ user.firstname }}</p>
+<section>
+    {% for review in reviews %}
+        <article>
+            {% for user in users %}
+                {% if user.id == review.id %}
+                <div>{{ user.username }}</div>
+                {% endif %}
+            {% endfor %}
+            <div>{{ review.text }}</div>
+            {% for comment in comments %}
+                {% if comment.review_id == review.id %}
+                <div>
+                {% for user in users %}
+                    {% if user.id == comment.user_id %}
+                    <div>{{ user.username }}</div>
+                    {% endif %}
+                {% endfor %}
+                    <div>{{ comment.text }}</div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </article>
+    {% endfor %}
+</section>
 {% endblock %}

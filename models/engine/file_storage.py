@@ -3,23 +3,25 @@
 import json
 from models.base_model import BaseModel
 from models.user import User
-from models.author import Author
-from models.book import Book, BookAuthor
+from models.book import Book
 from models.review import Review
-from models.comment import Comment
-from models.shelf import ShelfBook
 from models.shelf import Shelf
+from models.report import Report
+from models.read_session import ReadSession
+from models.tracker import Tracker
+from models.user_stat import UserStat
 
 
 classes = {"BaseModel": BaseModel,
            "User": User,
            "Book": Book,
-           "Author": Author,
-           "BookAuthor": BookAuthor,
            "Review": Review,
-           "Comment": Comment,
-           "ShelfBook": ShelfBook,
-           "Shelf": Shelf}
+           "Shelf": Shelf,
+           "Report": Report,
+           "ReadSession": ReadSession,
+           "Tracker": Tracker,
+           "UserStat": UserStat
+           }
 
 
 class FileStorage:
