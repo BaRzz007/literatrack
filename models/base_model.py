@@ -57,7 +57,7 @@ class BaseModel:
             temp_dict["updated_at"] = temp_dict["updated_at"].strftime(timefmt)
         if f"_{self.__class__.__name__}__duration" in temp_dict.keys():
             temp_dict["duration"] = self.duration.days
-        del temp_dict[f"_{self.__class__.__name__}__duration"]
+            del temp_dict[f"_{self.__class__.__name__}__duration"]
         temp_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in temp_dict:
             del temp_dict["_sa_instance_state"]
