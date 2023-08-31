@@ -2,11 +2,23 @@
     <head>
         {% block head %}
         {% endblock %}
-        <link rel="stylesheet" href="../dist/output.css">
+        <link rel="stylesheet" type="text/css" href="../static/styles/header.css">
+	<link rel="stylesheet" type="text/css" href="../static/styles/footer.css">
+	<link rel="stylesheet" type="text/css" href="../static/styles/common.css">
     </head>
     <body>
-        <header></header>
+        <header class="header">
+		<div class="logo">
+				<p>LiteraTrack</p>
+		</div>
+		<div class=nav>
+			<a href="127.0.0.1:5000/login" class="login">LOGIN</a>
+			<a href="127.0.0.1:5000/signup"class="signup">SIGN UP</a>
+		</div>
+	</header>
         {% block body %}
         {% endblock %}
+	<footer>
+	</footer>
     </body>
 </html>

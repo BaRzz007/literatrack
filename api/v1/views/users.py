@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from flask import flask, jsonify, request, abort
-from api.vi.views import app_views
+from flask import jsonify, request, abort
+from api.v1.views import app_views
 from models.user import User
 from models import storage
 
@@ -14,7 +14,7 @@ def get_post_users():
 
     if request.method == "POST":
         if not request.get_json():
-            abort(400, description="Not a JSON")
+            return jsonify({"error": "not a JSON"}), 400
         if "email" not in request.get_json():
             abort(400, description="Missing email")
         if "password" not in request.get_json():
@@ -28,7 +28,7 @@ def get_post_users():
 
     if request.method == "GET":
         all_users = storage.all(User).values()
-        list_users = [user.dict() for user in all_users]
+        list_users = [user.to_dict() for user in all_users]
         return jsonify(list_users)
 
 @app_views.route("/users/<user_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False)
@@ -38,22 +38,22 @@ def get_update_user(user_id):
     PUT: Updates a user
     DELETE: Deletes a user
     """
-    user = storage.get(user, user_id)
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
 
     if request.method == "GET":
-        return jsonify(user.to_dict), 200
+        return jsonify(user.to_dict()), 200
 
     if request.method == "PUT":
         if not request.get_json():
-            return(400, description="Not a JSON")
+            return jsonify({"errror": "not a JSON"}), 400
 
         ignore_list = ["id", "email", "created_at", "updated_at"]
 
         data = request.get_json()
-        for key, value in data:
-            if not in ignore_list:
+        for key, value in data.items():
+            if not key in ignore_list:
                 setattr(user, key, value)
         user.save()
         return jsonify(user.to_dict()), 200

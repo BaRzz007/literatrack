@@ -8,14 +8,14 @@ class Report(BaseModel):
     """
     Report class
     """
-    user_id = ""
     month = ""
     year = ""
     # duration in days
     __duration = timedelta(days=0)
     num_books_started = 0
     num_books_completed = 0
-    completion_rate = 0
+    completion_rate_percentage = 0
+    report_type = None
 
     @property
     def duration(self):
