@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, make_response
+from flask_cors import CORS
 from models import storage
 from models.user import User
 from api.v1.views import app_views
@@ -30,6 +31,16 @@ def server_error(error):
 def index():
     """Index page"""
     return render_template("index.html")
+
+@app.route("/login", strict_slashes=False)
+def login():
+    """Login specific things"""
+    return "Log user in"
+
+@app.route("/signup")
+def signup():
+    """Signup specific things"""
+    return "Register user"
 
 
 if __name__ == "__main__":
