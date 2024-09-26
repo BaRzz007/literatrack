@@ -3,3 +3,4 @@ file.json
 *.pdf
 github
 github.pub
+venv
