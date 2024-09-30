@@ -1,6 +1,13 @@
 """Database storage class"""
+from sqlalchemy import create_engine
+from config import url_object
 
 class DBStorage():
+
+    def __init__():
+        """initialize the storage object"""
+        __engine = create_engine(url_object)
+
 
     def new():
         """creates new object"""
