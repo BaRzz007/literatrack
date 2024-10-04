@@ -3,22 +3,33 @@
 import uuid
 from datetime import datetime
 from datetime import timedelta
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import DateTime
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
-Base = declarative_base()
+Base = DeclarativeBase
 timefmt = "%Y-%m-%dT%H:%M:%S.%f"
 
 
-class BaseModel:
+class BaseModel(Base):
     """base_model class"""
 
-    def __init__(self, *args, **kwargs):
-        """Innitialization of model instance"""
-        time = datetime.utcnow()
-        self.id = str(uuid.uuid4())
-        self.created_at = time
-        self.updated_at = time
+    #def __init__(self, *args, **kwargs):
+    #    """Innitialization of model instance"""
+    #    time = datetime.utcnow()
+    #    self.id = str(uuid.uuid4())
+    #    self.created_at = time
+    #    self.updated_at = time
+    __abstract__ = True
+    id: Mapped[str] = mapped_column(nullable=False, default=lambda: str(uuid.uuid4()))
+    created_at: Mapped[datetime] = mapped_column(
+            DateTime,
+            default=lambda: datetime.utcnow())
+    updated_at: Mapped[datetime] = mapped_column(
+            DateTime,
+            default=lambda: datetime.utcnow(),
+            onupdate=datetime.utcnow())
+
 
     def __str__(self):
         """String representaton of instance"""

@@ -1,6 +1,6 @@
 """Database storage class"""
 from sqlalchemy import create_engine
-from config import url_object
+from config_db import url_object
 
 class DBStorage():
 
