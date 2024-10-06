@@ -1,45 +1,49 @@
 #!/usr/bin/python3
 """base_model module"""
 import uuid
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from sqlalchemy import DateTime
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
-Base = DeclarativeBase
 timefmt = "%Y-%m-%dT%H:%M:%S.%f"
 
-
-class BaseModel(Base):
+class BaseModel(DeclarativeBase):
     """base_model class"""
 
-    #def __init__(self, *args, **kwargs):
-    #    """Innitialization of model instance"""
-    #    time = datetime.utcnow()
-    #    self.id = str(uuid.uuid4())
-    #    self.created_at = time
-    #    self.updated_at = time
     __abstract__ = True
-    id: Mapped[str] = mapped_column(nullable=False, default=lambda: str(uuid.uuid4()))
+
+    id: Mapped[str] = mapped_column(
+            primary_key=True,
+            nullable=False,
+            default=lambda: str(uuid.uuid4()))
+
     created_at: Mapped[datetime] = mapped_column(
             DateTime,
-            default=lambda: datetime.utcnow())
+            default=lambda: datetime.now(), nullable=False)
+
     updated_at: Mapped[datetime] = mapped_column(
             DateTime,
-            default=lambda: datetime.utcnow(),
-            onupdate=datetime.utcnow())
+            default=lambda: datetime.now(),
+            onupdate=lambda: datetime.now(), nullable=False)
 
+    def __init__(self, *args, **kwargs):
+        """Innitialization of model instance"""
+        super().__init__(*args, *kwargs)
+        time = datetime.now()
+        self.id = str(uuid.uuid4())
+        self.created_at = time
+        self.updated_at = time
 
     def __str__(self):
         """String representaton of instance"""
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
     
     def save(self):
         """ """
         from models import storage
-        self.updated_at = datetime.utcnow()
-        storage.new(self)
+        self.updated_at = datetime.now()
+        # storage.new(self)
         storage.save()
 
     def to_dict(self):
