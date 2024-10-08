@@ -1,12 +1,14 @@
 """Database storage class"""
 from sqlalchemy import create_engine
 from models.engine.config_db import url_object
+from models.base_model import BaseModel
 
 class DBStorage():
 
     def __init__(self):
         """initialize the storage object"""
-        __engine = create_engine(url_object)
+        self.engine = create_engine(url_object)
+
 
 
     def new(self, obj):
@@ -31,4 +33,4 @@ class DBStorage():
 
     def reload(self):
         """create the database tables"""
-        pass
+        BaseModel.metadata.create_all(self.engine)

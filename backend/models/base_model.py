@@ -29,7 +29,10 @@ class BaseModel(DeclarativeBase):
 
     def __init__(self, *args, **kwargs):
         """Innitialization of model instance"""
-        super().__init__(*args, *kwargs)
+        if kwargs:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+        super().__init__()
         time = datetime.now()
         self.id = str(uuid.uuid4())
         self.created_at = time
