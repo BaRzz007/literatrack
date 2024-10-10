@@ -1,16 +1,11 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Console module"""
 import cmd
 from models import storage
 from models.base_model import BaseModel
-from models.shelf import Shelf
 from models.book import Book
-from models.review import Review
 from models.user import User
 from models.read_session import ReadSession
-from models.report import Report
-from models.tracker import Tracker
-from models.user_stat import UserStat
 
 
 class LiteraTrackCmd(cmd.Cmd):

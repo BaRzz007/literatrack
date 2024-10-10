@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """base_model module"""
 import uuid
 from datetime import datetime, timedelta
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -10,10 +10,8 @@ timefmt = "%Y-%m-%dT%H:%M:%S.%f"
 
 class BaseModel(DeclarativeBase):
     """base_model class"""
-
-    __abstract__ = True
-
     id: Mapped[str] = mapped_column(
+            String(30),
             primary_key=True,
             nullable=False,
             default=lambda: str(uuid.uuid4()))
@@ -29,10 +27,10 @@ class BaseModel(DeclarativeBase):
 
     def __init__(self, *args, **kwargs):
         """Innitialization of model instance"""
+        super().__init__()
         if kwargs:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-        super().__init__()
         time = datetime.now()
         self.id = str(uuid.uuid4())
         self.created_at = time
