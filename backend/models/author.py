@@ -8,8 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 class Author(BaseModel):
     """Author class"""
     __tablename__ = 'authors'
-    firstname: Mapped[str] = mapped_column(String(20))
-    lastname: Mapped[str] = mapped_column(String(20))
-    fullname: Mapped[str] = mapped_column(String(60),
-            default=lambda self: f'{self.firstname} {self.lastname}')
-    nationality: Mapped[str] = mapped_column(String(20))
+    firstname: Mapped[str] = mapped_column(String(20), nullable=True)
+    lastname: Mapped[str] = mapped_column(String(20), nullable=True)
+    fullname: Mapped[str] = mapped_column(String(60))
+    nationality: Mapped[str] = mapped_column(String(20), nullable=True)

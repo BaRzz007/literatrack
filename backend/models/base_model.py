@@ -11,23 +11,20 @@ timefmt = "%Y-%m-%dT%H:%M:%S.%f"
 class BaseModel(DeclarativeBase):
     """base_model class"""
     id: Mapped[str] = mapped_column(
-            String(30),
+            String(36),
             primary_key=True,
-            nullable=False,
-            default=lambda: str(uuid.uuid4()))
+            nullable=False)
 
     created_at: Mapped[datetime] = mapped_column(
             DateTime,
-            default=lambda: datetime.now(), nullable=False)
+            nullable=False)
 
     updated_at: Mapped[datetime] = mapped_column(
             DateTime,
-            default=lambda: datetime.now(),
-            onupdate=lambda: datetime.now(), nullable=False)
+            nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Innitialization of model instance"""
-        super().__init__()
         if kwargs:
             for key, value in kwargs.items():
                 setattr(self, key, value)
@@ -35,17 +32,21 @@ class BaseModel(DeclarativeBase):
         self.id = str(uuid.uuid4())
         self.created_at = time
         self.updated_at = time
+        super().__init__()
+        from models import storage
+        storage.new(self)
+        storage.save()
 
     def __str__(self):
         """String representaton of instance"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
     
-    def save(self):
-        """ """
+    def save(self, n=0):
+        """save object to the database"""
         from models import storage
         self.updated_at = datetime.now()
         # storage.new(self)
-        storage.save()
+        storage.save(n)
 
     def to_dict(self):
         """serializes an object to dictionary"""
