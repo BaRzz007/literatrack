@@ -11,7 +11,7 @@ from models.note import Note
 from models.publisher import Publisher
 from models.reading_session import ReadingSession
 from models.category import Category
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models.engine.config_db import url_object
 from models.base_model import BaseModel
@@ -33,14 +33,23 @@ class DBStorage():
         """get an object from the database by id"""
         return self.__session.get(class_name, id)
 
-    def all(self, class_name=None):
+    def all(self, cls=None):
         """get all objects in the database"""
-        pass
+        if cls is not None:
+            stmt = select(cls)
+            cls_objs = self.__session.execute(stmt).scalars().all()
+            return cls_objs
+        all_objs = []
+        for cls in [User, Author, Book, Collection, Comment,
+                Post, Publisher, Note, ReadingSession, Category]:
+            stmt = select(cls)
+            all_objs = all_objs + self.__session.execute(stmt).scalars().all()
+        return all_objs
 
     def save(self, n=0):
         """save an object to the database"""
-        # the function is recursive so that all the updated object can update
-        #+ there corresponding updated_at variable
+        # the function is recursive so all the updated object can update
+        #+ their corresponding updated_at variable
         dirty_objs = list(self.__session.dirty)
         if n < len(dirty_objs):
             dirty_objs[n].save(n+1)
