@@ -61,7 +61,7 @@ class DBStorage():
 
     def close(self):
         """close the context for a request session"""
-        self.__session.remove()
+        self.__session.close()
 
     def reload(self):
         """create the database tables"""

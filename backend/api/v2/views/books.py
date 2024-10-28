@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 from flask import jsonify, request, abort
 from models import storage
 from models.book import Book
-from api.v1.views import app_views
+from api.v2.views import app_views
 import requests
 
 

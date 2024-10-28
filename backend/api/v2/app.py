@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Flask app"""
 from models import storage
 from flask import Flask, jsonify, make_response
@@ -6,9 +6,12 @@ from flask_cors import CORS
 from api.v2.views import app_views
 
 app = Flask(__name__)
+#todo: understand why we used this config
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
+#todo: understand the use of blueprints
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"api/v1/*": {"origins": "*"}})
+#todo: understand cors
+cors = CORS(app, resources={r"api/v2/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
